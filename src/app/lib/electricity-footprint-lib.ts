@@ -22,14 +22,19 @@ export interface ElectricityFootprintData {
   greenPowerFraction: number;
 }
 
+export const initialElectricityFootprintData: ElectricityFootprintData = {
+  zipCode: "",
+  kwhPerMonth: 0,
+  greenPowerFraction: 0,
+};
+
 export async function calculateElectricityFootprint(data: ElectricityFootprintData): Promise<number> {
   try {
     await electricityFootprintSchema.validate(data, { abortEarly: false });
-    data.greenPowerFraction = data.greenPowerFraction / 100;
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/electricity-footprint`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, greenPowerFraction: data.greenPowerFraction / 100 }),
     });
     if (!response.ok) {
       throw new Error("Failed to calculate electricity footprint");

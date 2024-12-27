@@ -8,6 +8,10 @@ export interface FuelOilFootprintData {
   gallonsPerMonth: number;
 }
 
+export const initialFuelOilFootprintData: FuelOilFootprintData = {
+  gallonsPerMonth: 0,
+};
+
 export async function calculateFuelOilFootprint(data: FuelOilFootprintData): Promise<number> {
   try {
     await fuelOilFootprintSchema.validate(data, { abortEarly: false });

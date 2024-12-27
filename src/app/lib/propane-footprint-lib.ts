@@ -8,6 +8,10 @@ export interface PropaneFootprintData {
   gallonsPerMonth: number;
 }
 
+export const initialPropaneFootprintData: PropaneFootprintData = {
+  gallonsPerMonth: 0,
+};
+
 export async function calculatePropaneFootprint(data: PropaneFootprintData): Promise<number> {
   try {
     await propaneFootprintSchema.validate(data, { abortEarly: false });

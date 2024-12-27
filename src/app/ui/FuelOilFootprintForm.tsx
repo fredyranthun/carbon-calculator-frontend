@@ -12,11 +12,12 @@ import { useFormik } from "formik";
 
 export default function FuelOilFootprintForm() {
   const updateFuelOilFootprint = useFootprintStore((state) => state.updateFuelOilFootprint);
+  const fuelOilFootprintData = useFootprintStore((state) => state.fuelOilFootprintData);
+
   const formik = useFormik({
-    initialValues: { gallonsPerMonth: 0 },
+    initialValues: fuelOilFootprintData,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        console.log(values);
         await updateFuelOilFootprint(values);
       } catch (errors: any) {
         setErrors(

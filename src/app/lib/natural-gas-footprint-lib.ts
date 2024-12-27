@@ -16,6 +16,11 @@ export interface NaturalGasFootprintData {
   unit: string;
 }
 
+export const initialNaturalGasFootprintData: NaturalGasFootprintData = {
+  consumePerMonth: 0,
+  unit: "",
+};
+
 export async function calculateNaturalGasFootprint(data: NaturalGasFootprintData): Promise<number> {
   try {
     await naturalGasFootprintSchema.validate(data, { abortEarly: false });

@@ -17,8 +17,10 @@ import MenuItem from "@mui/material/MenuItem";
 
 export default function NaturalGasFootprintForm() {
   const updateNaturalGasFootprint = useFootprintStore((state) => state.updateNaturalGasFootprint);
+  const naturalGasFootprintData = useFootprintStore((state) => state.naturalGasFootprintData);
+
   const formik = useFormik({
-    initialValues: { consumePerMonth: 0, unit: "" },
+    initialValues: naturalGasFootprintData,
     validationSchema: naturalGasFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {

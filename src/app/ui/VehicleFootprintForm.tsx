@@ -7,11 +7,11 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid2 from "@mui/material/Grid2";
 import React from "react";
-import { Car } from "../lib/transportation-footprint-lib";
+import { Vehicle } from "../lib/transportation-footprint-lib";
 
 interface Props {
   index: number;
-  car: Car;
+  vehicle: Vehicle;
   handleChange: (event: React.ChangeEvent<any>) => void;
   handleBlur: (event: React.FocusEvent<any>) => void;
   touched: any;
@@ -19,27 +19,26 @@ interface Props {
   remove: <X = any>(index: number) => X | undefined;
 }
 
-export const CarFootprintForm = React.memo(function CarFootprintForm({
+export const VehicleFootprintForm = React.memo(function VehicleFootprintForm({
   index,
-  car,
+  vehicle,
   handleBlur,
   handleChange,
   remove,
   touched,
   errors,
 }: Props) {
-  console.log("Rnder CarFootprintForm", index);
   return (
     <Box sx={{ mb: 4 }}>
       <Typography variant="h6" component="h2">
-        Car {index + 1}
+        Vehicle {index + 1}
       </Typography>
       <Grid2 container spacing={2}>
         <Grid2 sx={{ xs: 12, sx: 4 }}>
           <TextField
             label="Miles per Year"
-            name={`cars[${index}].milesPerYear`}
-            value={car.milesPerYear}
+            name={`vehicles[${index}].milesPerYear`}
+            value={vehicle.milesPerYear}
             onChange={handleChange}
             onBlur={handleBlur}
             type="number"
@@ -52,8 +51,8 @@ export const CarFootprintForm = React.memo(function CarFootprintForm({
         <Grid2 sx={{ xs: 12, sx: 4 }}>
           <TextField
             label="Miles per Gallon"
-            name={`cars[${index}].milesPerGallon`}
-            value={car.milesPerGallon}
+            name={`vehicles[${index}].milesPerGallon`}
+            value={vehicle.milesPerGallon}
             onChange={handleChange}
             onBlur={handleBlur}
             type="number"
@@ -67,8 +66,8 @@ export const CarFootprintForm = React.memo(function CarFootprintForm({
           <FormControlLabel
             control={
               <Checkbox
-                name={`cars[${index}].maintenance`}
-                checked={car.maintenance}
+                name={`vehicles[${index}].regularMaintenance`}
+                checked={vehicle.regularMaintenance}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
@@ -78,10 +77,10 @@ export const CarFootprintForm = React.memo(function CarFootprintForm({
         </Grid2>
       </Grid2>
       <Button variant="contained" color="secondary" onClick={() => remove(index)} sx={{ mt: 2 }}>
-        Remove Car
+        Remove vehicle
       </Button>
     </Box>
   );
 });
 
-export default CarFootprintForm;
+export default VehicleFootprintForm;

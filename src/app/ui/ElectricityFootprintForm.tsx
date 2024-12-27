@@ -17,8 +17,10 @@ import { electricityFootprintSchema } from "../lib/electricity-footprint-lib";
 
 export default function ElectricityFootprintForm() {
   const updateElectricityFootprint = useFootprintStore((state) => state.updateElectricityFootprint);
+  const electricityFootprintData = useFootprintStore((state) => state.electricityFootprintData);
+  console.log("electricityFootprintData", electricityFootprintData);
   const formik = useFormik({
-    initialValues: { zipCode: "", kwhPerMonth: 0, greenPowerFraction: 0 },
+    initialValues: electricityFootprintData,
     validationSchema: electricityFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
@@ -76,7 +78,7 @@ export default function ElectricityFootprintForm() {
         <Box sx={{ width: "95%", margin: "0 auto" }}>
           <Slider
             name="greenPowerFraction"
-            value={+formik.values.greenPowerFraction}
+            value={formik.values.greenPowerFraction}
             onChange={(event, value) => formik.setFieldValue("greenPowerFraction", value)}
             valueLabelDisplay="auto"
             aria-labelledby="green-energy-slider"

@@ -12,8 +12,9 @@ import { useFormik } from "formik";
 
 export default function PropaneFootprintForm() {
   const updatePropaneFootprint = useFootprintStore((state) => state.updatePropaneFootprint);
+  const propaneFootprintData = useFootprintStore((state) => state.propaneFootprintData);
   const formik = useFormik({
-    initialValues: { gallonsPerMonth: 0 },
+    initialValues: propaneFootprintData,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         console.log(values);

@@ -4,21 +4,23 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useFormik, FieldArray, FormikProvider } from "formik";
-import CarFootprintForm from "../ui/CarFootprintForm";
+import VehicleFootprintForm from "../ui/VehicleFootprintForm";
 import { transportationFootprintSchema } from "../lib/transportation-footprint-lib";
+import { useFootprintStore } from "../lib/store";
+import TotalFootprintCard from "../ui/TotalFootprintCard";
 
 export default function TransportationFootprint() {
-  console.log("Render");
+  const updateTransportationFootprint = useFootprintStore((state) => state.updateTransportationFootprint);
+  const transportationFootprintData = useFootprintStore((state) => state.transportationFootprintData);
   const formik = useFormik({
-    initialValues: {
-      cars: [{ milesPerYear: 0, milesPerGallon: 0, maintenance: false }],
-    },
+    initialValues: transportationFootprintData,
     validationSchema: transportationFootprintSchema,
     onSubmit: async (values) => {
-      // Make API call here
-      // const response = await fetch('/api/transportation-footprint', { method: 'POST', body: JSON.stringify(values) });
-      // const result = await response.json();
-      console.log("Submitted data:", values);
+      try {
+        await updateTransportationFootprint(values);
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -28,30 +30,31 @@ export default function TransportationFootprint() {
         <Typography variant="h4" component="h1" gutterBottom>
           Transport Footprint Calculator
         </Typography>
+        <TotalFootprintCard />
         <FormikProvider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <FieldArray name="cars" validateOnChange={false}>
+            <FieldArray name="vehicles" validateOnChange={false}>
               {({ push, remove }) => (
                 <>
-                  {formik.values.cars.map((car, index) => (
-                    <CarFootprintForm
+                  {formik.values.vehicles.map((vehicle, index) => (
+                    <VehicleFootprintForm
                       key={index}
                       index={index}
-                      car={car}
+                      vehicle={vehicle}
                       handleChange={formik.handleChange}
                       handleBlur={formik.handleBlur}
-                      touched={formik.touched.cars?.[index]}
-                      errors={formik.errors.cars?.[index]}
+                      touched={formik.touched.vehicles?.[index]}
+                      errors={formik.errors.vehicles?.[index]}
                       remove={remove}
                     />
                   ))}
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => push({ milesPerYear: 0, milesPerGallon: 0, maintenance: false })}
+                    onClick={() => push({ milesPerYear: 0, milesPerGallon: 0, regularMaintenance: false })}
                     sx={{ mt: 2 }}
                   >
-                    Add Car
+                    Add Vehicle
                   </Button>
                 </>
               )}

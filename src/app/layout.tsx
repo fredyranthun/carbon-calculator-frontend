@@ -4,8 +4,7 @@ import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "@/theme";
-import ModeSwitch from "@/app/ui/ModeSwitch";
-import TotalDisplay from "./ui/TotalDisplay";
+import Navbar from "./ui/Navbar";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -30,8 +29,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <TotalDisplay />
-            <ModeSwitch />
+            <Navbar />
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>

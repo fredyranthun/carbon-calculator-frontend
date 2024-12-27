@@ -6,6 +6,7 @@ import ElectricityFootprintForm from "../ui/ElectricityFootprintForm";
 import NaturalGasFootprintForm from "../ui/NaturalGasFootprintForm";
 import FuelOilFootprintForm from "../ui/FuelOilFootprintForm";
 import PropaneFootprintForm from "../ui/PropaneFootprintForm";
+import TotalFootprintCard from "../ui/TotalFootprintCard";
 
 const forms = [
   { name: "Electricity", component: ElectricityFootprintForm },
@@ -21,6 +22,8 @@ export default function HousingFootprint() {
         <Typography variant="h4" component="h1" gutterBottom>
           Housing Footprint Calculator
         </Typography>
+
+        <TotalFootprintCard />
 
         <Grid2 container spacing={4}>
           {forms.map((form) => (
