@@ -8,9 +8,22 @@ import ModeSwitch from "./ModeSwitch";
 import Link from "next/link";
 import { useMediaQuery } from "@mui/material";
 import MobileNavbar from "./MobileNavbar";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const isMobile = useMediaQuery("(max-width: 820px)");
+  const pathname = usePathname();
+
+  const links = [
+    {
+      name: "Housing",
+      href: "/housing",
+    },
+    {
+      name: "Transportation",
+      href: "/transportation",
+    },
+  ];
 
   if (isMobile) {
     return <MobileNavbar />;
@@ -23,12 +36,17 @@ export default function Navbar() {
           Carbon Footprint Calculator
         </Typography>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Link href="/housing" passHref>
-            <Button color="inherit">Housing</Button>
-          </Link>
-          <Link href="/transportation" passHref>
-            <Button color="inherit">Transportation</Button>
-          </Link>
+          {links.map((link) => (
+            <Button
+              key={link.name}
+              disabled={pathname === link.href}
+              color="inherit"
+              href={link.href}
+              LinkComponent={Link}
+            >
+              {link.name}
+            </Button>
+          ))}
           <ModeSwitch />
         </Box>
       </Toolbar>

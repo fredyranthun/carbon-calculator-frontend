@@ -19,6 +19,17 @@ export default function MobileNavbar() {
     setDrawerOpen(open);
   };
 
+  const links = [
+    {
+      name: "Housing",
+      href: "/housing",
+    },
+    {
+      name: "Transportation",
+      href: "/transportation",
+    },
+  ];
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -32,16 +43,13 @@ export default function MobileNavbar() {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box sx={{ width: 300 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
           <List>
-            <ListItem>
-              <Link href="/housing" passHref>
-                <ListItemText primary="Housing" />
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href="/transportation" passHref>
-                <ListItemText primary="Transportation" />
-              </Link>
-            </ListItem>
+            {links.map((link) => (
+              <ListItem key={link.name}>
+                <Link href={link.href} passHref>
+                  <ListItemText primary={link.name} />
+                </Link>
+              </ListItem>
+            ))}
           </List>
           <ModeSwitch />
         </Box>
