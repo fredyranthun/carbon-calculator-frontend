@@ -7,25 +7,25 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-import { useFootprintStore } from "../lib/store";
 import { useFormik } from "formik";
-import { naturalGasFootprintSchema } from "../lib/natural-gas-footprint-lib";
+import { NaturalGasFootprintData, naturalGasFootprintSchema } from "../lib/natural-gas-footprint-lib";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function NaturalGasFootprintForm() {
-  const updateNaturalGasFootprint = useFootprintStore((state) => state.updateNaturalGasFootprint);
-  const naturalGasFootprintData = useFootprintStore((state) => state.naturalGasFootprintData);
+export interface NaturalGasFootprintFormProps {
+  initialValues: NaturalGasFootprintData;
+  onSubmit: (values: NaturalGasFootprintData) => void;
+}
 
+export default function NaturalGasFootprintForm({ initialValues, onSubmit }: NaturalGasFootprintFormProps) {
   const formik = useFormik({
-    initialValues: naturalGasFootprintData,
+    initialValues,
     validationSchema: naturalGasFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        console.log(values);
-        await updateNaturalGasFootprint(values);
+        await onSubmit(values);
       } catch (errors: any) {
         setErrors(
           errors.inner.reduce((acc: any, error: any) => {
@@ -61,6 +61,7 @@ export default function NaturalGasFootprintForm() {
         <FormControl fullWidth sx={{ marginTop: "12px" }}>
           <InputLabel id="unit-label">Unit</InputLabel>
           <Select
+            data-testid="unit"
             labelId="unit-label"
             id="unit"
             name="unit"

@@ -7,18 +7,21 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-import { useFootprintStore } from "../lib/store";
 import { useFormik } from "formik";
+import { FuelOilFootprintData, fuelOilFootprintSchema } from "../lib/fuel-oil-footprint-lib";
 
-export default function FuelOilFootprintForm() {
-  const updateFuelOilFootprint = useFootprintStore((state) => state.updateFuelOilFootprint);
-  const fuelOilFootprintData = useFootprintStore((state) => state.fuelOilFootprintData);
+export interface FuelOilFootprintFormProps {
+  initialValues: FuelOilFootprintData;
+  onSubmit: (values: FuelOilFootprintData) => void;
+}
 
+export default function FuelOilFootprintForm({ initialValues, onSubmit }: FuelOilFootprintFormProps) {
   const formik = useFormik({
-    initialValues: fuelOilFootprintData,
+    initialValues,
+    validationSchema: fuelOilFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        await updateFuelOilFootprint(values);
+        await onSubmit(values);
       } catch (errors: any) {
         setErrors(
           errors.inner.reduce((acc: any, error: any) => {

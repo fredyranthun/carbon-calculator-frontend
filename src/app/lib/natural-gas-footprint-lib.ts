@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const naturalGasFootprintSchema = yup.object().shape({
   consumePerMonth: yup
     .number()
-    .min(0, "Natural gas usage must be greater than 0")
+    .positive("Natural gas usage must be greater than 0")
     .required("Natural gas usage is required"),
   unit: yup
     .string()

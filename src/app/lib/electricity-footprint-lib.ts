@@ -7,7 +7,7 @@ export const electricityFootprintSchema = yup.object().shape({
     .required("Zip code is required"),
   kwhPerMonth: yup
     .number()
-    .min(0, "Electricity usage must be greater than 0")
+    .positive("Electricity usage must be greater than 0")
     .required("Electricity usage is required"),
   greenPowerFraction: yup
     .number()

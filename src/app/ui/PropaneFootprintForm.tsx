@@ -7,18 +7,21 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-import { useFootprintStore } from "../lib/store";
 import { useFormik } from "formik";
+import { PropaneFootprintData, propaneFootprintSchema } from "../lib/propane-footprint-lib";
 
-export default function PropaneFootprintForm() {
-  const updatePropaneFootprint = useFootprintStore((state) => state.updatePropaneFootprint);
-  const propaneFootprintData = useFootprintStore((state) => state.propaneFootprintData);
+export interface PropaneFootprintFormProps {
+  initialValues: PropaneFootprintData;
+  onSubmit: (values: PropaneFootprintData) => void;
+}
+
+export default function PropaneFootprintForm({ initialValues, onSubmit }: PropaneFootprintFormProps) {
   const formik = useFormik({
-    initialValues: propaneFootprintData,
+    initialValues,
+    validationSchema: propaneFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        console.log(values);
-        await updatePropaneFootprint(values);
+        await onSubmit(values);
       } catch (errors: any) {
         setErrors(
           errors.inner.reduce((acc: any, error: any) => {

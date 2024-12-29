@@ -11,20 +11,21 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import HelpIcon from "@mui/icons-material/Help";
 import Slider from "@mui/material/Slider";
-import { useFootprintStore } from "../lib/store";
 import { useFormik } from "formik";
-import { electricityFootprintSchema } from "../lib/electricity-footprint-lib";
+import { ElectricityFootprintData, electricityFootprintSchema } from "../lib/electricity-footprint-lib";
 
-export default function ElectricityFootprintForm() {
-  const updateElectricityFootprint = useFootprintStore((state) => state.updateElectricityFootprint);
-  const electricityFootprintData = useFootprintStore((state) => state.electricityFootprintData);
-  console.log("electricityFootprintData", electricityFootprintData);
+export interface ElectricityFootprintFormProps {
+  initialValues: ElectricityFootprintData;
+  onSubmit: (values: ElectricityFootprintData) => void;
+}
+
+export default function ElectricityFootprintForm({ initialValues, onSubmit }: ElectricityFootprintFormProps) {
   const formik = useFormik({
-    initialValues: electricityFootprintData,
+    initialValues,
     validationSchema: electricityFootprintSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        await updateElectricityFootprint(values);
+        await onSubmit(values);
       } catch (errors: any) {
         setErrors(
           errors.inner.reduce((acc: any, error: any) => {

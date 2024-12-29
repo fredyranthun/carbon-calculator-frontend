@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const propaneFootprintSchema = yup.object().shape({
-  gallonsPerMonth: yup.number().min(0, "Propane usage must be greater than 0").required("Propane usage is required"),
+  gallonsPerMonth: yup.number().positive("Propane usage must be greater than 0").required("Propane usage is required"),
 });
 
 export interface PropaneFootprintData {

@@ -1,7 +1,10 @@
 import * as yup from "yup";
 
 export const fuelOilFootprintSchema = yup.object().shape({
-  gallonsPerMonth: yup.number().min(0, "Fuel oil usage must be greater than 0").required("Fuel oil usage is required"),
+  gallonsPerMonth: yup
+    .number()
+    .positive("Fuel oil usage must be greater than 0")
+    .required("Fuel oil usage is required"),
 });
 
 export interface FuelOilFootprintData {
